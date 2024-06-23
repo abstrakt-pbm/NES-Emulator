@@ -3,10 +3,11 @@
 
 project ("Nemo")
 
-set( SFML_DIR "dependencies/SFML/lib/cmake/SFML" )
-set(SFML_STATIC_LIBRARIES TRUE)
-add_executable ( main "main.cpp" "gui/gui.cpp" "gui/gui.h" )
+
+set( CMAKE_CXX_STANDARD 20 )
+
+add_executable ( main "main.cpp" )
 
 add_subdirectory(nes)
-find_package(SFML REQUIRED COMPONENTS window)
-target_link_libraries(main NES sfml-window )
+add_subdirectory(dependencies)
+target_link_libraries(main NES Logger )
