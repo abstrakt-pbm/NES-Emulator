@@ -6,7 +6,7 @@
 
 
 class CPU {
-private:
+protected:
 	Bus* bus;
 
 	Byte reg_A;
@@ -34,22 +34,24 @@ private:
 
 	void setupZFlag(Byte value);
 	
-	void executeImplied(int opcode);
-	void executeBranch(int opcode);
-	void executeGroupCommand(int opcode);
-	void executeCm01(int opcode);
-	void executeCm10(int opcode);
-	void executeCm00(int opcode);
+	void execute();
+	void executeImplied(Byte opcode);
+	void executeBranch(Byte opcode);
+	void executeGroupCommand(Byte opcode);
+	void executeCm01(Byte opcode);
+	void executeCm10(Byte opcode);
+	void executeCm00(Byte opcode);
 
-	Address calculateAbsoluteAddress(int opcode);
-	Address calculateAbsAddr01(int opcode);
-	Address calculateAbsAddr10(int opcode);
-	Address calculateAbsAddr00(int opcode);
+	Address calculateAbsoluteAddress(Byte opcode);
+	Address calculateAbsAddr01(Byte opcode);
+	Address calculateAbsAddr10(Byte opcode);
+	Address calculateAbsAddr00(Byte opcode);
 	Address calculateAddr(AddressingModes addrMode);
 	Address readAddr(Address addr);
 
 public:
 	CPU(Bus* bus);
+	void step();
 	void reset();
 };
 

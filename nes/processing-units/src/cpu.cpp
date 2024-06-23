@@ -1,7 +1,10 @@
 #include "../include/cpu.h"
+#include <iostream>
 
 CPU::CPU(Bus* bus) {
-	reg_A, reg_X, reg_Y = 0;
+	reg_A = 0;
+	reg_X = 0;
+	reg_Y = 0;
 	reg_PC = 1;
 	reg_S = 0xFD;
 	flag_C, flag_Z, flag_D, flag_V, flag_N = false;
@@ -14,7 +17,17 @@ void CPU::reset() {
 	bus->writeMemory(0x4015, 0);
 }
 
-void CPU::executeGroupCommand(int opcode) {
+void CPU::step() {
+	std::cout << (int)reg_X << '\n';
+	executeImplied(0xE8);
+	std::cout << (int)reg_X;
+}
+
+void CPU::execute() {
+
+}
+
+void CPU::executeGroupCommand(Byte opcode) {
 	switch (opcode & OperationCodes::Masks::COMMAND_GROUP) {
 	case 0b01:
 		executeCm01(opcode);
@@ -28,7 +41,7 @@ void CPU::executeGroupCommand(int opcode) {
 	}
 }
 
-void CPU::executeImplied(int opcode)
+void CPU::executeImplied(Byte opcode)
 {
 	switch (static_cast<OperationCodes::ImpiedOperations>(opcode)) {
 	case OperationCodes::ImpiedOperations::PHP: {
@@ -167,7 +180,7 @@ void CPU::executeImplied(int opcode)
 	}
 }
 
-void CPU::executeBranch(int opcode) {
+void CPU::executeBranch(Byte opcode) {
 	bool branchState = opcode & OperationCodes::BRANCH_COMPARE;
 
 	switch (static_cast<OperationCodes::BrenchFlags>(opcode & OperationCodes::Masks::BRANCH_FLAG >> 6)) {
@@ -200,7 +213,7 @@ void CPU::executeBranch(int opcode) {
 
 }
 
-void CPU::executeCm01(int opcode) {
+void CPU::executeCm01(Byte opcode) {
 	Address address = calculateAbsoluteAddress(opcode);
 	switch (static_cast<OperationCodes::OperationsGroup01>(opcode & OperationCodes::Masks::OP_CODE >> 5)) {
 	case OperationCodes::OperationsGroup01::ORA: {
@@ -253,7 +266,7 @@ void CPU::executeCm01(int opcode) {
 	}
 }
 
-void CPU::executeCm10(int opcode) {
+void CPU::executeCm10(Byte opcode) {
 	Address address = calculateAbsoluteAddress(opcode);
 	OperationCodes::AddressingModes10 addresationMode = static_cast<OperationCodes::AddressingModes10>((opcode & OperationCodes::Masks::ADDR_MODE) >> 2);
 	switch (static_cast<OperationCodes::OperationsGroup10>(opcode & OperationCodes::Masks::OP_CODE >> 5)) {
@@ -321,7 +334,7 @@ void CPU::executeCm10(int opcode) {
 	}
 }
 
-void CPU::executeCm00(int opcode) {
+void CPU::executeCm00(Byte opcode) {
 	Address address = calculateAbsoluteAddress(opcode);
 	switch (static_cast<OperationCodes::OperationsGroup00>(opcode & OperationCodes::Masks::OP_CODE >> 5)) {
 	case OperationCodes::OperationsGroup00::BIT: {
@@ -365,7 +378,7 @@ void CPU::executeCm00(int opcode) {
 	}
 }
 
-Address CPU::calculateAbsoluteAddress(int opcode) {
+Address CPU::calculateAbsoluteAddress(Byte opcode) {
 	Address addr = 0;
 	switch (opcode & OperationCodes::Masks::COMMAND_GROUP) {
 	case 0b01:
@@ -382,7 +395,7 @@ Address CPU::calculateAbsoluteAddress(int opcode) {
 }
 
 
-Address CPU::calculateAbsAddr01(int opcode) {
+Address CPU::calculateAbsAddr01(Byte opcode) {
 	Address absAddr = 0;
 	switch (static_cast<OperationCodes::AddressingModes01>(opcode & OperationCodes::Masks::ADDR_MODE >> 2)) {
 	case OperationCodes::AddressingModes01::INDIRECT_X:
@@ -413,7 +426,7 @@ Address CPU::calculateAbsAddr01(int opcode) {
 	return absAddr;
 }
 
-Address CPU::calculateAbsAddr10(int opcode) {
+Address CPU::calculateAbsAddr10(Byte opcode) {
 	Address absAddr = 0;
 	switch (static_cast<OperationCodes::AddressingModes10>(opcode & OperationCodes::Masks::ADDR_MODE >> 2)) {
 	case OperationCodes::AddressingModes10::IMMEDIATE:
@@ -438,7 +451,7 @@ Address CPU::calculateAbsAddr10(int opcode) {
 	return absAddr;
 }
 
-Address CPU::calculateAbsAddr00(int opcode) {
+Address CPU::calculateAbsAddr00(Byte opcode) {
 	Address absAddr = 0;
 	switch (static_cast<OperationCodes::AddressingModes00>(opcode & OperationCodes::Masks::ADDR_MODE >> 2)) {
 	case OperationCodes::AddressingModes00::IMMEDIATE:

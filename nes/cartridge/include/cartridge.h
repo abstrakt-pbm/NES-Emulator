@@ -11,14 +11,20 @@ private:
 	std::string path;
 	std::vector<Byte> pgrRom;
 	std::vector<Byte> chrRom;
+	Byte mapperType;
+	Byte nameTableMirroring;
 
 	bool isUsingChrRam;
-	bool isHasExtendedRam;
-
-
+	bool hasExtendedRam;
 
 public:
-	Cartridge(std::string);
+	Cartridge(std::string pathToCartridge);
+	std::vector<Byte> getPgrRom();
+	std::vector<Byte> getChr();
+	Byte getMapperType();
+	Byte getNameTableMirroringType();
+	bool isHasExtendedRam();
+
 	void load();
 };
 

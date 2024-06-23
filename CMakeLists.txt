@@ -5,7 +5,7 @@ project ("Nemo")
 
 set( SFML_DIR "dependencies/SFML/lib/cmake/SFML" )
 set(SFML_STATIC_LIBRARIES TRUE)
-add_executable (main "main.cpp")
+add_executable ( main "main.cpp" "gui/gui.cpp" "gui/gui.h" )
 
 add_subdirectory(nes)
 find_package(SFML REQUIRED COMPONENTS window)

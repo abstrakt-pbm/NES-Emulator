@@ -8,6 +8,9 @@ Bus::Bus() {
 }
 
 Byte Bus::readMemory(Address address) {
+	if (address < 0x2000) {
+		return memory[address & 0x7FF];
+	}
 	return memory[address];
 }
 

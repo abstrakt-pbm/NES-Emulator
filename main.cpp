@@ -1,20 +1,14 @@
-﻿#include <SFML/Window.hpp>
-
+﻿#include <iostream>
+#include "nes/processing-units/include/bus.h"
+#include "nes/processing-units/include/cpu.h"
+#include "nes/cartridge/include/cartridge.h"
 int main(){
-    sf::Window window(sf::VideoMode(800, 600), "My window");
-
-    // run the program as long as the window is open
-    while (window.isOpen())
-    {
-        // check all the window's events that were triggered since the last iteration of the loop
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            // "close requested" event: we close the window
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-    }
-
-    return 0;
+	/*
+	Bus* bus = new Bus();
+	CPU* cpu = new CPU(bus);
+	cpu->step();
+	*/
+	Cartridge theLegendOfZelda("C:\\Users\\pyumi\\source\\repos\\Nemo\\resources\\cartridges\\Legend of Zelda, The (USA).nes");
+	theLegendOfZelda.load();
+	std::cout << (int)theLegendOfZelda.getMapperType();
 }
