@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CARTRIDGE_H
 #define CARTDIGE_H
 #include <vector>

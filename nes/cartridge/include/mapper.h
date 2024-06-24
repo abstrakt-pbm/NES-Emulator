@@ -1,3 +1,4 @@
+#pragma once
 #ifndef MAPPER_H
 
 enum NameTableMirroring {

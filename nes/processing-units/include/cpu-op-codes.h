@@ -1,3 +1,4 @@
+#pragma once
 #ifndef CPU_OP_H
 #define CPU_OP_H
 using Address = short int;
