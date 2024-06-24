@@ -8,14 +8,14 @@ set ( LOGGER_HEDERS
 	"include/logger.h"
 	"include/log.h"
 	
-)
+ "clogs.h")
 
 set ( LOGGER_SOURCES
 	"src/log-stasher.cpp"
 	"src/logger.cpp"
 	"src/log.cpp"
 	
- )
+  "src/logger-manager.cpp")
 
 
 add_library(Logger STATIC ${LOGGER_HEDERS} ${LOGGER_SOURCES})
