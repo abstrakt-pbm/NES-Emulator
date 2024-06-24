@@ -6,12 +6,14 @@ set ( LOGGER_HEDERS
 	"include/log-stasher.h"
 	"include/logger.h"
 	"include/log.h"
+	
 )
 
 set ( LOGGER_SOURCES
 	"src/log-stasher.cpp"
 	"src/logger.cpp"
 	"src/log.cpp"
+	
 )
 
 
