@@ -19,10 +19,11 @@ class Log {
 private:
 	std::chrono::time_point<std::chrono::system_clock> creationTime;
 	LogLevel logLevel;
+	std::string moduleName;
 	std::string message;
 
 public:
-	Log(LogLevel logLevel, std::string message);
+	Log(LogLevel logLevel, std::string moduleName, std::string message);
 	std::string toString();
 };
 #endif
