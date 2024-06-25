@@ -1,4 +1,4 @@
-#include "../include/cartridge.h"
+﻿#include "../include/cartridge.h"
 #include "../include/mapper.h"
 #include <format>
 #include <fstream>
@@ -71,11 +71,11 @@ void Cartridge::load() {
 		logger->logFatal("Cartridge", "Error while reading PGR data");
 	}
 
-	if (headers[5]) {
-		if (!iNesFile.read((char*)chrRom, 16384 * headers[5])) {
+	if ( headers[5]) {
+		if (!iNesFile.read((char*)chrRom, 8192 * headers[5])) {
 			logger->logFatal("Cartridge", "Error while reading CHR data");
 		}
 	}
-	
+	logger->logNormal("Cartridge", std::format("CHR partitions {}", headers[5]));
 	iNesFile.close();
 }
