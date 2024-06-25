@@ -15,7 +15,7 @@ set ( LOGGER_SOURCES
 	"src/logger.cpp"
 	"src/log.cpp"
 	
-  "src/logger-manager.cpp")
+  )
 
 
 add_library(Logger STATIC ${LOGGER_HEDERS} ${LOGGER_SOURCES})

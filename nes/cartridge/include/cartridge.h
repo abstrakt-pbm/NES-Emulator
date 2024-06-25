@@ -3,37 +3,30 @@
 #define CARTDIGE_H
 #include <vector>
 #include <string>
+#include "../../../dependencies/logger/clogs.h"
 
 using Address = short int;
 using Byte = unsigned char;
 
-enum TvSystem {
-	NTSC,
-	PAL
-};
 
 class Cartridge {
 private:
+	Logger* logger;
+
 	std::string pathToInesFile;
 	Byte* pgrRom;
-	Byte* pgrRam;
 	Byte* chrRom;
-	Byte* trainer;
 	Byte mapperType;
 	Byte nameTableMirroring;
-	TvSystem usedTvSystem;
 
-	bool isTvSystemPresented;
-	bool isUsingTrainer;
 	bool isUsingChrRam;
-	bool isUsingPgrRam;
 	bool isUsingExtendedRam;
-	bool isUsingAlternativeNametableLayout;
 
 public:
-	Cartridge(std::string pathToCartridge);
+	Cartridge(Logger* logger, std::string pathToCartridge);
+	~Cartridge();
 	Byte* getPgrRom();
-	Byte* getChr();
+	Byte* getChrRom();
 	Byte getMapperType();
 	Byte getNameTableMirroringType();
 	bool isHasExtendedRam();

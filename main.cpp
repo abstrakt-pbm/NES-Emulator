@@ -3,7 +3,9 @@
 #include "nes/cartridge/include/cartridge.h"
 
 int main(){
-	Cartridge* cartridge = new Cartridge("C:\\Users\\pyumi\\source\\repos\\Nemo\\resources\\cartridges\\Legend of Zelda, The (USA).nes");
+	LogStasher* logStasher = new LogStasher();
+	Logger* logger = new Logger(logStasher);
+	Cartridge* cartridge = new Cartridge(logger, "C:\\Users\\pyumi\\source\\repos\\Nemo\\resources\\cartridges\\Legend of Zelda, The (USA).nes");
 	cartridge->load();
-	LoggerManager::getInstance()->getLogStasherInstance()->bringOut();
+	logStasher->bringOut();
 }
