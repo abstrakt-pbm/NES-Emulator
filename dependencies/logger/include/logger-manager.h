@@ -1,5 +1,5 @@
-#pragma once
 #ifndef LOGGER_MANAGER_H
+#define LOGGER_MANAGER_H
 
 #include "log-stasher.h"
 #include "logger.h"
@@ -8,7 +8,7 @@
 
 class LoggerManager {
 private:
-	static std::mutex mtx;
+	static  std::mutex mtx;
 	static LoggerManager* loggerManager;
 	LogStasher* logStasher;
 	Logger* logger;

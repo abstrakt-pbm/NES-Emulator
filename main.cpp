@@ -1,7 +1,9 @@
 ﻿#include <iostream>
 #include "dependencies/logger/clogs.h"
+#include "nes/cartridge/include/cartridge.h"
 
 int main(){
-	LoggerManager::getInstance()->getLoggerInstance()->logFatal("CPU", "Error in CPY");
+	Cartridge* cartridge = new Cartridge("C:\\Users\\pyumi\\source\\repos\\Nemo\\resources\\cartridges\\Legend of Zelda, The (USA).nes");
+	cartridge->load();
 	LoggerManager::getInstance()->getLogStasherInstance()->bringOut();
 }

@@ -1,17 +1,17 @@
 #include "../include/cartridge.h"
 #include "../include/mapper.h"
+#include "../../../dependencies/logger/clogs.h"
 #include <fstream>
-#include <iostream>
 
 Cartridge::Cartridge(std::string path) {
-	this->path = path;
+	this->pathToInesFile = path;
 }
 
-std::vector<Byte> Cartridge::getPgrRom() {
+Byte* Cartridge::getPgrRom() {
 	return this->pgrRom;
 }
 
-std::vector<Byte> Cartridge::getChr() {
+Byte* Cartridge::getChr() {
 	return this->chrRom;
 }
 Byte Cartridge::getMapperType() {
@@ -23,41 +23,39 @@ Byte Cartridge::getNameTableMirroringType() {
 }
 
 bool Cartridge::isHasExtendedRam() {
-	return this->hasExtendedRam;
+	return this->isUsingExtendedRam;
 }
 
 void Cartridge::load() {
-	std::ifstream inesFile(path, std::ios::in | std::ios::binary);
-	if (!inesFile.is_open()) {
-		std::cout << "INes file not opened" << '\n';
+	std::ifstream iNesFile (pathToInesFile, std::ios::in | std::ios::binary);
+	if (!iNesFile.is_open()) {
+		LoggerManager::getInstance()->getLoggerInstance()->logFatal("Cartridge", "Can't open iNes file");
+		iNesFile.close();
 		return;
 	}
-	std::vector<Byte> header(16);
-	inesFile.read(reinterpret_cast<char*>(&header[0]), 16);
 
-	pgrRom = std::vector<Byte>(header[4] * 16 * 1024);
-	chrRom = std::vector<Byte>(header[5] * 8 * 1024);
-
-	if ( header[6] & 0x8 ) {
-		nameTableMirroring = NameTableMirroring::FOUR_SCREEN;
+	Byte* headers = new Byte[16];
+	if (!iNesFile.read((char*)headers, 16)) {
+		LoggerManager::getInstance()->getLoggerInstance()->logFatal("Cartridge", "Error while reading iNes headers");
+		iNesFile.close();
+		delete headers;
+		return;
 	}
-	else {
-		nameTableMirroring = header[6] & 0x1;
-	}
-
-	mapperType = ((header[6] >> 4) & 0xf) | (header[7] & 0xf0);
-
-	hasExtendedRam = header[6] & 0x2;
-
-	if ( !inesFile.read(reinterpret_cast<char*>(&pgrRom[0]), 0x4000 * header[4] )) {
-		std::cout << "Error while reading pgr data" << '\n';
+	if (std::string(headers[0], headers[4]) != "NES\x1A") {
+		LoggerManager::getInstance()->getLoggerInstance()->logWarning("Cartridge", "Failed to check NES signature");
+		iNesFile.close();
+		delete headers;
+		return;
 	}
 
-	if (header[5]) {
-		if (!inesFile.read(reinterpret_cast<char*>(&chrRom[0]), 0x2000 * header[5])) {
-			std::cout << "Error while reading chr data";
-		}
-	}
+	pgrRom = new Byte[16384 * headers[4]];
+	chrRom = new Byte[8192 * headers[5]];
 
-	inesFile.close();
+	nameTableMirroring = headers[6] & 0b00000001;
+	isUsingExtendedRam = headers[6] & 0b00000010;
+	isUsingTrainer = headers[6] & 0b00000100;
+	isUsingAlternativeNametableLayout = headers[6] & 0b00001000;
+	mapperType = headers[6] & 0b11110000 >> 4 | headers[7] & 0b11110000;
+	
+	iNesFile.close();
 }

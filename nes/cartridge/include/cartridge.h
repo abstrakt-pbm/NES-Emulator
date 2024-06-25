@@ -7,21 +7,33 @@
 using Address = short int;
 using Byte = unsigned char;
 
+enum TvSystem {
+	NTSC,
+	PAL
+};
+
 class Cartridge {
 private:
-	std::string path;
-	std::vector<Byte> pgrRom;
-	std::vector<Byte> chrRom;
+	std::string pathToInesFile;
+	Byte* pgrRom;
+	Byte* pgrRam;
+	Byte* chrRom;
+	Byte* trainer;
 	Byte mapperType;
 	Byte nameTableMirroring;
+	TvSystem usedTvSystem;
 
+	bool isTvSystemPresented;
+	bool isUsingTrainer;
 	bool isUsingChrRam;
-	bool hasExtendedRam;
+	bool isUsingPgrRam;
+	bool isUsingExtendedRam;
+	bool isUsingAlternativeNametableLayout;
 
 public:
 	Cartridge(std::string pathToCartridge);
-	std::vector<Byte> getPgrRom();
-	std::vector<Byte> getChr();
+	Byte* getPgrRom();
+	Byte* getChr();
 	Byte getMapperType();
 	Byte getNameTableMirroringType();
 	bool isHasExtendedRam();

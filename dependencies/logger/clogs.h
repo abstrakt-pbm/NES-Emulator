@@ -1,4 +1,3 @@
-#pragma once
 #ifndef CLOGS_H
 #define CLOGS_H
 
@@ -9,6 +8,5 @@
 
 LoggerManager* LoggerManager::loggerManager = nullptr;
 std::mutex LoggerManager::mtx = std::mutex();
-
 
 #endif
