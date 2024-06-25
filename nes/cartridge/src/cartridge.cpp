@@ -9,12 +9,12 @@ Cartridge::Cartridge(Logger* logger, std::string path) {
 }
 
 Cartridge::~Cartridge() {
-	delete[] pgrRom;
+	delete[] prgRom;
 	delete[] chrRom;
 } 
 
-Byte* Cartridge::getPgrRom() {
-	return this->pgrRom;
+Byte* Cartridge::getPrgRom() {
+	return this->prgRom;
 }
 
 Byte* Cartridge::getChrRom() {
@@ -59,7 +59,7 @@ void Cartridge::load() {
 	}
 
 
-	pgrRom = new Byte[16384 * headers[4]];
+	prgRom = new Byte[16384 * headers[4]];
 	chrRom = new Byte[8192 * headers[5]];
 
 	nameTableMirroring = headers[6] & 0b00000001;
@@ -67,7 +67,7 @@ void Cartridge::load() {
 
 	mapperType = headers[6] & 0b11110000 >> 4 | headers[7] & 0b11110000;
 
-	if (!iNesFile.read((char*)pgrRom, 16384 * headers[4])) {
+	if (!iNesFile.read((char*)prgRom, 16384 * headers[4])) {
 		logger->logFatal("Cartridge", "Error while reading PGR data");
 	}
 

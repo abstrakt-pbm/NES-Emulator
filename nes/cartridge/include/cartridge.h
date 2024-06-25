@@ -14,7 +14,7 @@ private:
 	Logger* logger;
 
 	std::string pathToInesFile;
-	Byte* pgrRom;
+	Byte* prgRom;
 	Byte* chrRom;
 	Byte mapperType;
 	Byte nameTableMirroring;
@@ -25,7 +25,7 @@ private:
 public:
 	Cartridge(Logger* logger, std::string pathToCartridge);
 	~Cartridge();
-	Byte* getPgrRom();
+	Byte* getPrgRom();
 	Byte* getChrRom();
 	Byte getMapperType();
 	Byte getNameTableMirroringType();

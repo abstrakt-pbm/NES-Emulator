@@ -10,7 +10,8 @@ set(NES_HEDERS
 	"processing-units/include/cpu-op-codes.h"
 	"processing-units/include/cpu.h"
 	"processing-units/include/ppu.h"
-)
+	"cartridge/mapppers/include/mapper.h"
+	"cartridge/mapppers/include/nrom.h")
 
 set(NES_SOURCES
 	"cartridge/src/cartridge.cpp"
@@ -18,6 +19,7 @@ set(NES_SOURCES
 	"processing-units/src/bus.cpp"
 	"processing-units/src/cpu.cpp"
 	"processing-units/src/ppu.cpp"
-)
+	"cartridge/mapppers/src/mapper.cpp" 
+	"cartridge/mapppers/src/nrom.cpp")
 
-add_library(NES STATIC ${NES_HEDERS} ${NES_SOURCES})
+add_library(NES STATIC ${NES_HEDERS} ${NES_SOURCES} "cartridge/mapppers/include/mapper.h")
