@@ -8,6 +8,5 @@ int main(){
 	Cartridge* cartridge = new Cartridge(logger, "C:\\Users\\pyumi\\source\\repos\\Nemo\\resources\\cartridges\\Super_mario_brothers.nes");
 	NES* nes = new NES(cartridge);
 	nes->start();
-	logStasher->bringOut();
 
 }

@@ -5,6 +5,7 @@ NES::NES(Cartridge* cartridge) {
 	this->apu = new APU();
 	this->mapper = new NROMMapper(cartridge);
 	this->bus = new Bus(ppu, apu, mapper);
+	this->cpu = new CPU(this->bus);
 	isInWork = false;
 }
 

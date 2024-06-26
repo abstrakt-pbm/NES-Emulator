@@ -18,9 +18,6 @@ void CPU::reset() {
 }
 
 void CPU::step() {
-	std::cout << (int)reg_X << '\n';
-	executeImplied(0xE8);
-	std::cout << (int)reg_X;
 }
 
 void CPU::execute() {
