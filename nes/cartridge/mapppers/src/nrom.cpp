@@ -2,4 +2,5 @@
 
 NROMMapper::NROMMapper(Cartridge* cartridge) {
 	this->cartridge = cartridge;
+	cartridge->load();
 }

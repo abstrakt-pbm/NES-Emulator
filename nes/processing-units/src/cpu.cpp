@@ -2,13 +2,15 @@
 #include <iostream>
 
 CPU::CPU(Bus* bus) {
+	this->bus = bus;
 	reg_A = 0;
 	reg_X = 0;
 	reg_Y = 0;
-	reg_PC = 1;
+	reg_PC = 0;
 	reg_S = 0xFD;
-	flag_C, flag_Z, flag_D, flag_V, flag_N = false;
+	flag_C = flag_Z = flag_D = flag_V = flag_N = false;
 	flag_I = true;
+	waitingIRQ = waitingNMI = false;
 }
 
 void CPU::reset() {
@@ -28,10 +30,11 @@ void CPU::step() {
 	}
 
 	Byte opcommand = bus->readMemory(reg_PC++);
-	execute(opcommand);
+	executeCommand(opcommand);
 }
 
-void CPU::execute(Byte opcode) {
+void CPU::executeCommand(Byte opcode) {
+	std::cout << opcode;
 
 }
 

@@ -35,7 +35,7 @@ protected:
 
 	void setupZFlag(Byte value);
 	
-	void execute(Byte opcode);
+	void executeCommand(Byte opcode);
 	void executeImplied(Byte opcode);
 	void executeBranch(Byte opcode);
 	void executeGroupCommand(Byte opcode);
