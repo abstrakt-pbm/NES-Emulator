@@ -1,24 +1,29 @@
-#pragma once
 #ifndef NES_H
 #define NES_H
 
-#include "processing-units/include/cpu.h"
-#include "processing-units/include/ppu.h"
+#include "cartridge/mapppers/include/nrom.h"
+#include "cartridge/include/cartridge.h"
 #include "processing-units/include/apu.h"
 #include "processing-units/include/bus.h"
-#include "cartridge/include/cartridge.h"
+#include "processing-units/include/ppu.h"
+#include "processing-units/include/cpu.h"
+
 
 
 class NES {
 private:
-	CPU* cpu;
+	Bus* bus;
+	APU* apu;
 	PPU* ppu;
-	Bus* bus; 
-	Cartridge* cartridge;
+	CPU* cpu;
+	NROMMapper* mapper;
+
+	bool isInWork;
+
 public:
 	NES(Cartridge* cartridge);
 	void start();
+	void stop();
 };
 
 #endif // !NES_H
-1

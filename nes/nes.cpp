@@ -1,14 +1,20 @@
 #include "nes.h"
 
 NES::NES(Cartridge* cartridge) {
-	this->cartridge = cartridge;
-	bus = new Bus();
-	cpu = new CPU(bus);
-	ppu = new PPU(bus);
+	this->ppu = new PPU();
+	this->apu = new APU();
+	this->mapper = new NROMMapper(cartridge);
+	this->bus = new Bus(ppu, apu, mapper);
+	isInWork = false;
 }
 
 void NES::start() {
-	
-	cpu->step();
-	ppu->step();
+	isInWork = true;
+	while (isInWork) {
+		cpu->step();
+	}
+}
+
+void NES::stop() {
+	isInWork = false;
 }

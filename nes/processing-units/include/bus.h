@@ -5,7 +5,7 @@
 #include "cpu-op-codes.h"
 #include "ppu.h"
 #include "apu.h"
-#include "../../cartridge/mapppers/include/mapper.h"
+#include "../../cartridge/mapppers/include/nrom.h"
 
 class Bus {
 private:
@@ -26,7 +26,7 @@ private:
 	void ioInputCalls(Address address, Byte value);
 
 public:
-	Bus(PPU* ppu, APU* apu, Mapper* mappper);
+	Bus(PPU* ppu, APU* apu, NROMMapper* mappper);
 	Byte readMemory(Address address);
 	void writeMemory(Address address, Byte value);
 

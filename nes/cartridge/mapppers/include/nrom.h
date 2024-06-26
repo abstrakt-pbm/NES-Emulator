@@ -4,8 +4,9 @@
 
 class NROMMapper {
 private:
-
+	Cartridge* cartridge;
 public:
+	NROMMapper(Cartridge* cartridge);
 	void writePrg(Address address, Byte value);
 	Byte readPrg(Address address);
 
