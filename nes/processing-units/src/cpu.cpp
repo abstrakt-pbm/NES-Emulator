@@ -18,9 +18,20 @@ void CPU::reset() {
 }
 
 void CPU::step() {
+	if (waitingNMI) {
+		executeInterrupt(OperationCodes::InterruptTypes::NMI);
+		waitingNMI = waitingIRQ = false;
+	}
+	else if (waitingIRQ) {
+		executeInterrupt(OperationCodes::InterruptTypes::IRQ);
+		waitingNMI = waitingIRQ = false;
+	}
+
+	Byte opcommand = bus->readMemory(reg_PC++);
+	execute(opcommand);
 }
 
-void CPU::execute() {
+void CPU::execute(Byte opcode) {
 
 }
 
