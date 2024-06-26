@@ -13,7 +13,8 @@ private:
 	PPU* ppu;
 	APU* apu;
 	Mapper* mapper;
-	Byte* memory;
+	Byte memory[0xFFFF];
+	Byte extendedMemory[0x2000];
 
 	Byte ppuOutputCalls(Address address);
 	void ppuInputCalls(Address address, Byte value);

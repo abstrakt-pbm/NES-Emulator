@@ -5,9 +5,11 @@ Bus::Bus(PPU* ppu, APU* apu, Mapper* mappper) {
 	this->apu = apu;
 	this->mapper = mapper;
 
-	memory = new Byte[0xFFFF];
 	for (auto i = 0; i < 0xFFFF; i++) {
 		memory[i] = 0;
+	}
+	for (auto i = 0; i < 0x2000; i++) {
+		extendedMemory[i] = 0;
 	}
 }
 
@@ -90,6 +92,14 @@ void Bus::ppuInputCalls(Address address, Byte value) {
 		break;
 	}
 	}
+}
+
+Byte Bus::mapperOutputCalls(Address address) {
+	return mapper->readPrg(address);
+}
+
+void Bus::mapperInputCalls(Address address, Byte value) {
+	extendedMemory[address - 0x6000] = value;
 }
 
 Byte Bus::ioOutputCalls(Address address) {
