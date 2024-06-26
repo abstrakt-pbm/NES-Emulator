@@ -15,7 +15,7 @@ public:
 	void writeOamAddr(Byte value);
 
 	Byte readOamData();
-	void writeOamDate(Byte value);
+	void writeOamData(Byte value);
 
 	void writeScroll(Byte value);
 

@@ -15,14 +15,14 @@ private:
 	Mapper* mapper;
 	Byte* memory;
 
-	Byte ppuGetCalls(Address address);
-	void ppuPostCalls(Address address, Byte value);
+	Byte ppuOutputCalls(Address address);
+	void ppuInputCalls(Address address, Byte value);
 
-	Byte mapperGetCalls(Address address);
-	void mapperPostCalls(Address address, Byte value);
+	Byte mapperOutputCalls(Address address);
+	void mapperInputCalls(Address address, Byte value);
 
-	Byte ioGetCalls(Address address);
-	void ioPostCalls(Address address, Byte value);
+	Byte ioOutputCalls(Address address);
+	void ioInputCalls(Address address, Byte value);
 
 public:
 	Bus(PPU* ppu, APU* apu, Mapper* mappper);

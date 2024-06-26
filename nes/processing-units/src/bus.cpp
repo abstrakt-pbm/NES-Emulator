@@ -16,13 +16,13 @@ Byte Bus::readMemory(Address address) {
 		return memory[address & 0x7FF];
 	}
 	else if (address < 0x4000) {
-		return ppuGetCalls(address);
+		return ppuOutputCalls(address);
 	}
 	else if (address < 0x4020) {
-		return ioGetCalls(address);
+		return ioOutputCalls(address);
 	}
 	else {
-		mapperGetCalls(address);
+		mapperOutputCalls(address);
 	}
 }
 
@@ -31,29 +31,71 @@ void Bus::writeMemory(Address address, Byte value) {
 		memory[address & 0x7FF];
 	}
 	else if (address < 0x4000) {
-		ppuPostCalls(address, value);
+		ppuInputCalls(address, value);
 	}
 	else if (address < 0x4020) {
-		ioPostCalls(address, value);
+		ioInputCalls(address, value);
 	}
 	else {
-		mapperPostCalls(address, value);
+		mapperInputCalls(address, value);
 	}
 }
 
-Byte Bus::ppuGetCalls(Address address) {
-
+Byte Bus::ppuOutputCalls(Address address) {
+	switch (address & 0x7) {
+	case 2: {
+		return ppu->readStatus();
+		break;
+	}
+	case 4: {
+		return ppu->readOamData();
+		break;
+	}
+	case 7: {
+		return ppu->readData();
+		break;
+	}
+	}
 	return 0;
 }
 
-void Bus::ppuPostCalls(Address address, Byte value) {
-
+void Bus::ppuInputCalls(Address address, Byte value) {
+	switch (address & 0x7) {
+	case 0: {
+		ppu->control(value);
+		break;
+	}
+	case 1: {
+		ppu->writeMask(value);
+		break;
+	}
+	case 3: {
+		ppu->writeOamAddr(value);
+		break;
+	}
+	case 4: {
+		ppu->writeOamData(value);
+		break;
+	}
+	case 5: {
+		ppu->writeScroll(value);
+		break;
+	}
+	case 6: {
+		ppu->writeAddr(value);
+		break;
+	}
+	case 7: {
+		ppu->writeData(value);
+		break;
+	}
+	}
 }
 
-Byte Bus::ioGetCalls(Address address) {
+Byte Bus::ioOutputCalls(Address address) {
 	return 0;
 }
 
-void Bus::ioPostCalls(Address address, Byte value) {
+void Bus::ioInputCalls(Address address, Byte value) {
 	
 }
