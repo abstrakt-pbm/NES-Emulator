@@ -1,6 +1,18 @@
 #include "../include/cpu.h"
 #include <iostream>
 
+bool isInArray(const Byte* arr, Byte value) {
+	bool result = false;
+	int arraySize = sizeof(arr) / sizeof(Byte);
+	for (int i = 0; i < arraySize; i++) {
+		if (arr[i] == value) {
+			result = true;
+		}
+	}
+	return result;
+}
+
+
 CPU::CPU(Bus* bus) {
 	this->bus = bus;
 	reg_A = 0;
@@ -28,13 +40,20 @@ void CPU::step() {
 		executeInterrupt(OperationCodes::InterruptTypes::IRQ);
 		waitingNMI = waitingIRQ = false;
 	}
-	std::cout << reg_PC;
 	Byte opcommand = bus->readMemory(reg_PC++);
 	executeCommand(opcommand);
 }
 
 void CPU::executeCommand(Byte opcode) {
-	
+	std::cout << (int)opcode << '\n';
+	if (isInArray(impliedOps, opcode)) {
+		executeImplied(opcode);
+	} else if (isInArray(branchOps, opcode)) {
+		executeBranch(opcode);
+	}
+	else {
+		executeGroupCommand(opcode);
+	}
 
 }
 
@@ -591,3 +610,4 @@ void CPU::pushStack(Byte value) {
 Byte CPU::pullStack() {
 	return bus->readMemory(0x100 | ++reg_S);
 }
+
