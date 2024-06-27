@@ -19,12 +19,19 @@ private:
 	Byte mapperType;
 	Byte nameTableMirroring;
 
+	int prgRomSize;
+	int chrRomSize;
+
 	bool isUsingChrRam;
 	bool isUsingExtendedRam;
 
 public:
 	Cartridge(Logger* logger, std::string pathToCartridge);
 	~Cartridge();
+
+	int getPrgRomSize();
+	int getChrRomSize();
+
 	Byte* getPrgRom();
 	Byte* getChrRom();
 	Byte getMapperType();

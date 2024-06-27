@@ -28,13 +28,13 @@ void CPU::step() {
 		executeInterrupt(OperationCodes::InterruptTypes::IRQ);
 		waitingNMI = waitingIRQ = false;
 	}
-
+	std::cout << reg_PC;
 	Byte opcommand = bus->readMemory(reg_PC++);
 	executeCommand(opcommand);
 }
 
 void CPU::executeCommand(Byte opcode) {
-	std::cout << opcode;
+	
 
 }
 

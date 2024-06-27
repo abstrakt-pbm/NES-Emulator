@@ -57,9 +57,12 @@ void Cartridge::load() {
 		return;
 	}
 
+	prgRomSize = 16384 * headers[4];
+	chrRomSize = 8192 * headers[5];
 
-	prgRom = new Byte[16384 * headers[4]];
-	chrRom = new Byte[8192 * headers[5]];
+	prgRom = new Byte[prgRomSize];
+	chrRom = new Byte[chrRomSize];
+	
 
 	nameTableMirroring = headers[6] & 0b00000001;
 	isUsingExtendedRam = headers[6] & 0b00000010;
@@ -78,3 +81,12 @@ void Cartridge::load() {
 	logger->logNormal("Cartridge", std::format("CHR partitions {}", headers[5]));
 	iNesFile.close();
 }
+
+int Cartridge::getPrgRomSize() {
+	return prgRomSize;
+}
+
+int Cartridge::getChrRomSize() {
+	return chrRomSize;
+}
+
