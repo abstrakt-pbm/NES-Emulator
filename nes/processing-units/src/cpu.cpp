@@ -31,7 +31,6 @@ void CPU::reset(Address address) {
 }
 
 void CPU::step() {
-	std::cout << reg_PC << '\n';
 	if (waitingNMI) {
 		executeInterrupt(OperationCodes::InterruptTypes::NMI);
 		waitingNMI = waitingIRQ = false;
@@ -559,7 +558,7 @@ void CPU::setupZFlag(Byte value) {
 	flag_N = value & 0x80;
 }
 
-void CPU::interrupt(OperationCodes::InterruptTypes interruptType) {
+void CPU::setInterrupt(OperationCodes::InterruptTypes interruptType) {
 	switch (interruptType) {
 	case OperationCodes::InterruptTypes::NMI: {
 		waitingNMI = true;

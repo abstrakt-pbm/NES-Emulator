@@ -27,7 +27,7 @@ protected:
 	bool waitingNMI;
 	bool waitingIRQ;
 
-	void interrupt(OperationCodes::InterruptTypes interruptType);
+	void setInterrupt(OperationCodes::InterruptTypes interruptType);
 	void executeInterrupt(OperationCodes::InterruptTypes interruptType);
 
 	void pushStack(Byte value);
@@ -35,7 +35,6 @@ protected:
 
 	void setupZFlag(Byte value);
 	
-	void executeCommand(Byte opcode);
 	void executeImplied(Byte opcode);
 	void executeBranch(Byte opcode);
 	void executeGroupCommand(Byte opcode);
@@ -52,6 +51,7 @@ protected:
 
 public:
 	CPU(Bus* bus);
+	void executeCommand(Byte opcode);
 	void step();
 	void reset(Address address);
 };
