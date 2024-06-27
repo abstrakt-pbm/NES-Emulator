@@ -1,7 +1,7 @@
 #include "../include/nrom.h"
-
-NROMMapper::NROMMapper(Cartridge* cartridge) {
-	this->cartridge = cartridge;
+#include <iostream>
+NROMMapper::NROMMapper(Cartridge* cart) {
+	this->cartridge = cart;
 	cartridge->load();
 	if (cartridge->getPrgRomSize() == 0x4000) {
 		isUseOneBank = true;
@@ -17,7 +17,6 @@ NROMMapper::NROMMapper(Cartridge* cartridge) {
 	else {
 		isUseChrRam = false;
 	}
-
 }
 
 void NROMMapper::writePrg(Address address, Byte value) {
@@ -42,8 +41,7 @@ void NROMMapper::writeChr(Address address, Byte value) {
 Byte NROMMapper::readChr(Address address) {
 	if (isUseChrRam) {
 		return chrRam[address];
-	}
-	else {
+	} else {
 		return cartridge->getChrRom()[address];
 	}
 }

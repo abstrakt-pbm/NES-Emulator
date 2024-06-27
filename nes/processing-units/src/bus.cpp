@@ -1,6 +1,7 @@
 #include "../include/bus.h"
+#include <iostream>
 
-Bus::Bus(PPU* ppu, APU* apu, NROMMapper* mappper) {
+Bus::Bus(PPU* ppu, APU* apu, NROMMapper* mapper) {
 	this->ppu = ppu;
 	this->apu = apu;
 	this->mapper = mapper;

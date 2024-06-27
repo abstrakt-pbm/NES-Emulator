@@ -12,7 +12,7 @@ private:
 
 	PPU* ppu;
 	APU* apu;
-	Mapper* mapper;
+	NROMMapper* mapper;
 	Byte memory[0xFFFF];
 	Byte extendedMemory[0x2000];
 

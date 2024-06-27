@@ -17,7 +17,6 @@ CPU::CPU(Bus* bus) {
 	this->bus = bus;
 	reg_A = reg_X = reg_Y = 0;
 	reg_PC = 0xFFFC;
-	std::cout << (int)reg_PC << '\n';
 	reg_S = 0xFD;
 	flag_C = flag_Z = flag_D = flag_V = flag_N = false;
 	flag_I = true;
@@ -32,6 +31,7 @@ void CPU::reset(Address address) {
 }
 
 void CPU::step() {
+	std::cout << reg_PC << '\n';
 	if (waitingNMI) {
 		executeInterrupt(OperationCodes::InterruptTypes::NMI);
 		waitingNMI = waitingIRQ = false;
