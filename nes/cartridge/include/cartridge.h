@@ -5,7 +5,7 @@
 #include <string>
 #include "../../../dependencies/logger/clogs.h"
 
-using Address = short int;
+using Address = unsigned short int;
 using Byte = unsigned char;
 
 

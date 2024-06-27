@@ -15,19 +15,19 @@ bool isInArray(const Byte* arr, Byte value) {
 
 CPU::CPU(Bus* bus) {
 	this->bus = bus;
-	reg_A = 0;
-	reg_X = 0;
-	reg_Y = 0;
-	reg_PC = 0;
+	reg_A = reg_X = reg_Y = 0;
+	reg_PC = 0xFFFC;
+	std::cout << (int)reg_PC << '\n';
 	reg_S = 0xFD;
 	flag_C = flag_Z = flag_D = flag_V = flag_N = false;
 	flag_I = true;
 	waitingIRQ = waitingNMI = false;
 }
 
-void CPU::reset() {
+void CPU::reset(Address address) {
 	reg_S -= 3;
 	flag_I = true;
+	reg_PC = 0xFFFC;
 	bus->writeMemory(0x4015, 0);
 }
 
@@ -45,7 +45,6 @@ void CPU::step() {
 }
 
 void CPU::executeCommand(Byte opcode) {
-	std::cout << (int)opcode << '\n';
 	if (isInArray(impliedOps, opcode)) {
 		executeImplied(opcode);
 	} else if (isInArray(branchOps, opcode)) {

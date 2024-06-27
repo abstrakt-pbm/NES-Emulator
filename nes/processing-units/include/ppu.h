@@ -2,7 +2,7 @@
 #ifndef PPU_H
 #define PPU_H
 
-using Address = short int;
+using Address = unsigned short int;
 using Byte = unsigned char;
 
 class PPU {

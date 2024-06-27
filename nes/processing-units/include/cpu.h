@@ -53,7 +53,7 @@ protected:
 public:
 	CPU(Bus* bus);
 	void step();
-	void reset();
+	void reset(Address address);
 };
 
 #endif

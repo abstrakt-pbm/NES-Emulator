@@ -3,7 +3,7 @@
 
 #include "../../include/cartridge.h"
 
-using Address = short int;
+using Address = unsigned short int;
 using Byte = unsigned char;
 
 class Mapper {
