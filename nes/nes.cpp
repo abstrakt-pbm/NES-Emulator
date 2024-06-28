@@ -14,7 +14,6 @@ void NES::start() {
 	isInWork = true;
 	while (isInWork) {
 		cpu->step();
-
 	}
 }
 

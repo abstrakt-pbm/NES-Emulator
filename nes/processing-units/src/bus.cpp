@@ -30,7 +30,7 @@ Byte Bus::readMemory(Address address) {
 	}
 	else {
 		std::cout << "Call Mapper" << '\n';
-		mapperOutputCalls(address);
+		return mapperOutputCalls(address);
 	}
 }
 
