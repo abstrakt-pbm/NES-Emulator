@@ -1,9 +1,8 @@
 #include "../include/cpu.h"
 #include <iostream>
 
-bool isInArray(const Byte* arr, Byte value) {
+bool isInArray(const Byte* arr, Byte value, unsigned int arraySize) {
 	bool result = false;
-	int arraySize = sizeof(arr) / sizeof(Byte);
 	for (int i = 0; i < arraySize; i++) {
 		if (arr[i] == value) {
 			result = true;
@@ -23,19 +22,25 @@ CPU::CPU(Bus* bus) {
 	waitingIRQ = waitingNMI = false;
 }
 
+void CPU::reset() {
+	reset(readAddr(OperationCodes::System_Vectors::RES));
+}
+
 void CPU::reset(Address address) {
 	reg_S -= 3;
 	flag_I = true;
-	reg_PC = 0xFFFC;
+	reg_PC = address;
 	bus->writeMemory(0x4015, 0);
 }
 
 void CPU::step() {
 	if (waitingNMI) {
+		std::cout << "Execute NMI" << '\n';
 		executeInterrupt(OperationCodes::InterruptTypes::NMI);
 		waitingNMI = waitingIRQ = false;
 	}
 	else if (waitingIRQ) {
+		std::cout << "Execute IRQ" << '\n';
 		executeInterrupt(OperationCodes::InterruptTypes::IRQ);
 		waitingNMI = waitingIRQ = false;
 	}
@@ -44,12 +49,15 @@ void CPU::step() {
 }
 
 void CPU::executeCommand(Byte opcode) {
-	if (isInArray(impliedOps, opcode)) {
+	if (isInArray(impliedOps, opcode, 26)) {
+		std::cout << "Execute Implied" << '\n';
 		executeImplied(opcode);
-	} else if (isInArray(branchOps, opcode)) {
+	} else if (isInArray(branchOps, opcode, 8)) {
+		std::cout << "Execute branch" << '\n';
 		executeBranch(opcode);
 	}
 	else {
+		std::cout << "Execute group" << '\n';
 		executeGroupCommand(opcode);
 	}
 
@@ -66,6 +74,10 @@ void CPU::executeGroupCommand(Byte opcode) {
 	case 0b00:
 		executeCm00(opcode);
 		break;
+	default:{
+		std::cout << "Unrecognized op command: " << std::hex <<(int)opcode << '\n';
+		break;
+	}
 	}
 }
 
@@ -608,4 +620,3 @@ void CPU::pushStack(Byte value) {
 Byte CPU::pullStack() {
 	return bus->readMemory(0x100 | ++reg_S);
 }
-

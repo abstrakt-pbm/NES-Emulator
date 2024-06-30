@@ -1,4 +1,3 @@
-#pragma once
 #ifndef PPU_H
 #define PPU_H
 
@@ -7,6 +6,12 @@ using Byte = unsigned char;
 
 class PPU {
 private:
+	Byte reg_v;
+	Byte reg_t;
+	Byte reg_x;
+	Byte reg_w;
+	Byte* memory;
+	Address baseNameTableAddr;
 public:
 	PPU();
 	void control(Byte value);

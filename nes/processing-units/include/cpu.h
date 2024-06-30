@@ -54,6 +54,7 @@ public:
 	void executeCommand(Byte opcode);
 	void step();
 	void reset(Address address);
+	void reset();
 };
 
 #endif

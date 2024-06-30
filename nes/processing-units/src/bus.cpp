@@ -16,27 +16,22 @@ Bus::Bus(PPU* ppu, APU* apu, NROMMapper* mapper) {
 
 Byte Bus::readMemory(Address address) {
 	if (address < 0x2000) {
-		std::cout << "Call CPU" << '\n';
 		return memory[address & 0x7FF];
 	}
 	else if (address < 0x4000) {
-		std::cout << "Call PPU" << '\n';
-
 		return ppuOutputCalls(address);
 	}
-	else if (address < 0x4020) {
-		std::cout << "Call IO" << '\n';
+	else if (address < 0x4020){
 		return ioOutputCalls(address);
 	}
 	else {
-		std::cout << "Call Mapper" << '\n';
 		return mapperOutputCalls(address);
 	}
 }
 
 void Bus::writeMemory(Address address, Byte value) {
 	if (address < 0x2000) {
-		memory[address & 0x7FF];
+		memory[address & 0x7FF] = value;
 	}
 	else if (address < 0x4000) {
 		ppuInputCalls(address, value);

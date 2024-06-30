@@ -58,10 +58,10 @@
             }
         },
         {
-            "name": "linux",
+            "name": "LINUX",
             "generator": "Ninja",
-            "displayName": "Clang 16.0.6 x86_64-unknown-linux-gnu",
-            "description": "Using compilers: C = /run/current-system/sw/bin/clang, CXX = /run/current-system/sw/bin/clang++",
+            "displayName": "Linux, Clang",
+            "description": "Build on Linux, using llvm",
             "binaryDir": "${sourceDir}/out/build/${presetName}",
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
