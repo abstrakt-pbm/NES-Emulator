@@ -44,16 +44,60 @@ void PPU::vblankStep() {
 }
 
 void PPU::control(Byte value) {
-		
+	switch (value & 0b00000011) {
+	case 0: {
+		baseNameTableAddr = 0x2000;
+		break;
+	} 
+	case 1: {
+		baseNameTableAddr = 0x2400;
+		break;
+	}
+	case 2: {
+		baseNameTableAddr = 0x2800;
+		break;
+	}
+	case 3: {
+		baseNameTableAddr = 0x2C00;
+		break;
+	}
+	}
+
+	if ((value & 0b00000100) >> 2) {
+		vRamAddrGrow = 1;
+	}
+	else {
+		vRamAddrGrow = 32;
+	}
+	spriteSize = static_cast<SpriteSize>((value & 0b00100000) >> 5);
+
+	if (!spriteSize) {
+		if (value & 0b00001000) {
+			spritePattrenTableAddr8x8 = 0;
+		}
+		else {
+			spritePattrenTableAddr8x8 = 0x1000;
+		}
+	}
+
+	isGenerateNMI = value & 0b10000000;
 }
 
 void PPU::writeMask(Byte value) {
-	std::cout << "Call ppu write mask" << '\n';
+	isUseGreyscaleMode = value & 0b00000001;
+	showEdgeBackground = value & 0b00000010;
+	showEdgeSprites = value & 0b00000100;
+	showBackground = value & 0b00001000;
+	showSprites = value & 0b00010000;
 }
 
 Byte PPU::readStatus() {
-	std::cout << "Call ppu read status" << '\n';
-	return 0;
+	Byte status = 0;
+	if (currentState == PPUState::VBLANK) {
+		status &= 0b10000000;
+	}
+
+	return status;
 }
 
 void PPU::writeOamAddr(Byte value) {
@@ -73,7 +117,12 @@ void PPU::writeOamData(Byte value) {
 }
 
 void PPU::writeScroll(Byte value) {
-	std::cout << "Call write scroll" << '\n';
+	if (!isSecondSameCall) {
+		isSecondSameCall = true;
+	}
+	else {
+		isSecondSameCall = false;
+	}
 }
 
 void PPU::writeAddr(Byte value) {

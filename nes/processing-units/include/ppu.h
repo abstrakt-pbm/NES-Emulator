@@ -11,6 +11,10 @@ enum PPUState {
 	VBLANK
 };
 
+enum SpriteSize {
+	s8x8,
+	s8x16
+};
 
 class PPU {
 private:
@@ -19,6 +23,7 @@ private:
 
 	PPUState currentState;
 	int cycles;
+	bool isSecondSameCall;
 
 	Byte reg_v;
 	Byte reg_t;
@@ -34,20 +39,17 @@ private:
 
 	Address baseNameTableAddr;
 	Byte vRamAddrGrow;
-	Address patterTableAddrFor8x8;
-	Address backgroundPatternTableAddress;
-	Byte spriteSize;
-
-	bool isSecondSameCall;
+	SpriteSize spriteSize;
+	Address spritePattrenTableAddr8x8;
+	bool isGenerateNMI;
 
 	bool isUseGreyscaleMode;
-	bool isShowBackgroundLeft;
-	bool isShowSpritesLeft;
-	bool isShowBackground;
-	bool isShowSprites;
-	bool emphasizeRed;
-	bool emphasizeGreen;
-	bool emphasizeBlue;
+	bool showEdgeBackground;
+	bool showEdgeSprites;
+	bool showBackground;
+	bool showSprites;
+
+	
 
 	void preRenderStep();
 	void renderStep();
