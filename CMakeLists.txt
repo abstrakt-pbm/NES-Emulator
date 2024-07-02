@@ -6,7 +6,7 @@ project ("Nemo")
 
 set( CMAKE_CXX_STANDARD 20 )
 
-add_executable ( nemo "main.cpp" )
+add_executable ( nemo "main.cpp"  "gui/src/screen.cpp" "gui/include/screen.h")
 
 add_subdirectory(nes)
 add_subdirectory(dependencies)

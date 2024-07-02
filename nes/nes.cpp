@@ -2,9 +2,9 @@
 #include <iostream>
 
 NES::NES(Cartridge* cartridge) {
-	this->ppu = new PPU();
-	this->apu = new APU();
 	this->mapper = new NROMMapper(cartridge);
+	this->ppu = new PPU(mapper);
+	this->apu = new APU();
 	this->bus = new Bus(ppu, apu, mapper);
 	this->cpu = new CPU(bus);
 	isInWork = false;
@@ -13,6 +13,10 @@ NES::NES(Cartridge* cartridge) {
 void NES::start() {
 	isInWork = true;
 	while (isInWork) {
+		ppu->step();
+		ppu->step();
+		ppu->step();
+
 		cpu->step();
 	}
 }

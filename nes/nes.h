@@ -22,6 +22,7 @@ private:
 
 public:
 	NES(Cartridge* cartridge);
+	Byte* getRawPicture();
 	void start();
 	void stop();
 };
