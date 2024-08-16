@@ -1,6 +1,7 @@
 #ifndef NROM_H
 #define NROM_H
 #include "mapper.h"
+#include "../../include/cartridge.h"
 
 class NROMMapper {
 private:

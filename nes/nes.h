@@ -9,7 +9,6 @@
 #include "processing-units/include/cpu.h"
 
 
-
 class NES {
 private:
 	Bus* bus;
@@ -22,7 +21,6 @@ private:
 
 public:
 	NES(Cartridge* cartridge);
-	Byte* getRawPicture();
 	void start();
 	void stop();
 };

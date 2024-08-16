@@ -1,10 +1,11 @@
 #ifndef GUI_H
 #define GUI_H
 
+#include <SFML/Window.hpp>
+
 class GUI {
-public:
-	GUI();
-	void start();
+    public:
+    void start();
 };
 
 #endif

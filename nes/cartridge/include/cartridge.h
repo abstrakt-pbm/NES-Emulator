@@ -1,9 +1,8 @@
-#pragma once
 #ifndef CARTRIDGE_H
-#define CARTDIGE_H
+#define CARTRIDGE_H
 #include <vector>
 #include <string>
-#include "../../../dependencies/logger/clogs.h"
+
 
 using Address = unsigned short int;
 using Byte = unsigned char;
@@ -11,7 +10,6 @@ using Byte = unsigned char;
 
 class Cartridge {
 private:
-	Logger* logger;
 
 	std::string pathToInesFile;
 	Byte* prgRom;
@@ -26,7 +24,7 @@ private:
 	bool isUsingExtendedRam;
 
 public:
-	Cartridge(Logger* logger, std::string pathToCartridge);
+	Cartridge(std::string pathToCartridge);
 	~Cartridge();
 
 	int getPrgRomSize();

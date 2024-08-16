@@ -1,6 +1,8 @@
 #ifndef PPU_H
 #define PPU_H
 
+#include "../../cartridge/mapppers/include/nrom.h"
+
 using Address = unsigned short int;
 using Byte = unsigned char;
 

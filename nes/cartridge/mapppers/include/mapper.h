@@ -1,7 +1,7 @@
 #ifndef MAPPER_H
 #define MAPPER_H
 
-#include "../../include/cartridge.h"
+
 
 using Address = unsigned short int;
 using Byte = unsigned char;

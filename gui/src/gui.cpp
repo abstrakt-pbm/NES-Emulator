@@ -1,10 +1,4 @@
-#include <gui.h>
-
-
-GUI::GUI() {
-
-}
-
+#include "../include/gui.h"
 
 void GUI::start() {
     

@@ -579,6 +579,9 @@ void CPU::setInterrupt(OperationCodes::InterruptTypes interruptType) {
 	case OperationCodes::InterruptTypes::IRQ: {
 		waitingIRQ = true;
 		break;
+	} 
+	default: {
+		
 	}
 	}
 }
